@@ -60,7 +60,7 @@ export default {
 
 .image-placeholder {
   width: 100%;
-  height: 100%;
+  height:  fit-content;
   border-radius: 16px;
   background: #e0e0e0;
   overflow: hidden;
