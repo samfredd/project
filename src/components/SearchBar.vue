@@ -57,7 +57,7 @@ export default {
   background: transparent;
   border: none;
   border-radius: 30px;
-  color: white;
+  color: black;
   padding: 10px 15px;
   cursor: pointer;
   font-size: 1rem;
@@ -69,6 +69,6 @@ export default {
 }
 
 .search-button i {
-  margin-right: 5px;
+  margin-right: 0px;
 }
 </style>
