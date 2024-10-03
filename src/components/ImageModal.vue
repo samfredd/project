@@ -1,22 +1,17 @@
 <template>
-  <div class="modal" @click="closeModal">
-    <div class="modal-content" @click.stop>
-      <!-- Close Button -->
-      <button class="close-btn" @click="closeModal">&times;</button>
+  <div class="page-wrapper">
+    <div class="image-grid">
+      <div v-for="photo in photos" :key="photo.id" class="image-item" @click="selectPhoto(photo)">
+        <div class="image-placeholder" v-if="!photo.urls.small">
+          <div class="shimmer"></div>
+        </div>
 
-      <!-- Navigation Arrows positioned at the edges -->
-      <button class="nav-arrow left-arrow" @click="prevPhoto" :disabled="isFirstPhoto">&langle;</button>
-      <button class="nav-arrow right-arrow" @click="nextPhoto" :disabled="isLastPhoto">&rangle;</button>
+        <img v-if="photo.urls.small" :src="photo.urls.small" :alt="photo.description" class="image" />
 
-
-
-      <div class="modal-image">
-        <img :src="currentPhoto.urls.full" :alt="currentPhoto.description" />
-      </div>
-      <div class="modal-header">
-        <div class="user-info">
-          <p class="user-name">{{ currentPhoto.user.name }}</p>
-          <p class="user-location">{{ currentPhoto.location?.name || 'Location not available' }}</p>
+        <div class="overlay">
+          <p class="name">{{ photo.user.name }}</p>
+          <p class="location" v-if="photo.location?.name">{{ photo.location.name }}</p>
+          <p class="location" v-else>Location not available</p>
         </div>
       </div>
     </div>
@@ -25,141 +20,102 @@
 
 <script>
 export default {
-  props: ['photo', 'photos'],
-  data() {
-    return {
-      currentIndex: this.photos.findIndex(p => p.id === this.photo.id),
-    };
-  },
-  computed: {
-    currentPhoto() {
-      return this.photos[this.currentIndex];
-    },
-    isFirstPhoto() {
-      return this.currentIndex === 0;
-    },
-    isLastPhoto() {
-      return this.currentIndex === this.photos.length - 1;
-    },
-  },
+  props: ['photos'],
   methods: {
-    closeModal() {
-      this.$emit('closeModal');
-    },
-    nextPhoto() {
-      if (this.currentIndex < this.photos.length - 1) {
-        this.currentIndex++;
-      }
-    },
-    prevPhoto() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--;
-      }
-    },
-  },
+    selectPhoto(photo) {
+      this.$emit('selectPhoto', photo);
+    }
+  }
 };
 </script>
 
 <style scoped>
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+.page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.modal-content {
-  background: white;
-  border-radius: 16px;
-  width: 800px;
-  /* Fixed width */
-  height: 600px;
-  /* Fixed height */
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+.image-grid {
+  column-width: 250px;
+  column-gap: 20px;
+  margin-top: -30px;
+}
+
+.image-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.modal-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.image-item:hover {
+  transform: scale(1.05);
 }
 
-.modal-image img {
-  max-width: 100%;
-  max-height: 400px;
-  object-fit: contain;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 2rem;
-  background: none;
-  border: none;
-  color: #000;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.nav-arrow {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 3rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  z-index: 5;
-  padding: 0 20px;
-}
-
-.nav-arrow:disabled {
-  color: rgba(255, 255, 255, 0.3);
-  cursor: not-allowed;
-}
-
-.left-arrow {
-  left: 20px;
-}
-
-.right-arrow {
-  right: 20px;
-}
-
-.user-info {
+.image-placeholder {
   width: 100%;
-  padding: 10px;
+  height: 100%;
+  border-radius: 16px;
+  background: #e0e0e0;
+  overflow: hidden;
+  position: relative;
+}
+
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 15px;
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.9);
+  justify-content: flex-end;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
-.user-name {
-  font-size: 1.5rem;
+.name {
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 5px;
-  text-align: center;
+  margin: 0;
 }
 
-.user-location {
-  font-size: 1rem;
-  text-align: center;
-  color: gray;
+.location {
+  font-size: 0.9rem;
+  margin: 5px 0 0;
 }
 </style>
