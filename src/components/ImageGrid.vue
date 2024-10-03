@@ -33,6 +33,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
+  position: relative;
+  margin-top: -50px; /* Overlapping backdrop by shifting upward */
 }
 
 .image-item {
@@ -41,12 +43,15 @@ export default {
   border-radius: 16px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  height: 100%;
+  height: auto;
+}
+
+.image-item:nth-child(odd) {
+  grid-row: span 2; /* Stagger the height of odd images */
 }
 
 .image-item:hover {
   transform: scale(1.05);
-
 }
 
 .image-placeholder {
@@ -80,7 +85,7 @@ export default {
 
 .image {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   border-radius: 16px;
 }
