@@ -1,17 +1,18 @@
 <template>
-  <div class="image-grid">
-    <div v-for="photo in photos" :key="photo.id" class="image-item" @click="selectPhoto(photo)">
-      <!-- Shimmer effect placeholder -->
-      <div class="image-placeholder" v-if="!photo.urls.small">
-        <div class="shimmer"></div>
-      </div>
+  <div class="page-wrapper">
+    <div class="image-grid">
+      <div v-for="photo in photos" :key="photo.id" class="image-item" @click="selectPhoto(photo)">
+        <div class="image-placeholder" v-if="!photo.urls.small">
+          <div class="shimmer"></div>
+        </div>
 
-      <img v-if="photo.urls.small" :src="photo.urls.small" :alt="photo.description" class="image" />
+        <img v-if="photo.urls.small" :src="photo.urls.small" :alt="photo.description" class="image" />
 
-      <div class="overlay">
-        <p class="name">{{ photo.user.name }}</p>
-        <p class="location" v-if="photo.location?.name">{{ photo.location.name }}</p>
-        <p class="location" v-else>Location not available</p>
+        <div class="overlay">
+          <p class="name">{{ photo.user.name }}</p>
+          <p class="location" v-if="photo.location?.name">{{ photo.location.name }}</p>
+          <p class="location" v-else>Location not available</p>
+        </div>
       </div>
     </div>
   </div>
@@ -29,26 +30,27 @@ export default {
 </script>
 
 <style scoped>
+.page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  position: relative;
-  margin-top: -20px; 
-  height: fit-content;
+  column-width: 250px;
+  column-gap: 20px;
+  margin-top: -30px;
 }
 
 .image-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
   border-radius: 16px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  height: fit-content;
-}
-
-.image-item:nth-child(odd) {
-  grid-row: span 2;
 }
 
 .image-item:hover {
@@ -57,7 +59,7 @@ export default {
 
 .image-placeholder {
   width: 100%;
-  height:  fit-content;
+  height: 100%;
   border-radius: 16px;
   background: #e0e0e0;
   overflow: hidden;
@@ -78,7 +80,6 @@ export default {
   0% {
     transform: translateX(-100%);
   }
-
   100% {
     transform: translateX(100%);
   }
@@ -86,7 +87,7 @@ export default {
 
 .image {
   width: 100%;
-  height: fit-content;
+  height: auto;
   object-fit: cover;
   border-radius: 16px;
 }
@@ -103,6 +104,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
 .name {
