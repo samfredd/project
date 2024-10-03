@@ -43,7 +43,7 @@ export default {
   border-radius: 16px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  height: auto;
+  height: fit-content;
 }
 
 .image-item:nth-child(odd) {
@@ -56,7 +56,7 @@ export default {
 
 .image-placeholder {
   width: 100%;
-  height: auto;
+  height:  fit-content;
   border-radius: 16px;
   background: #e0e0e0;
   overflow: hidden;
@@ -85,7 +85,7 @@ export default {
 
 .image {
   width: 100%;
-  height: auto;
+  height: fit-content;
   object-fit: cover;
   border-radius: 16px;
 }
