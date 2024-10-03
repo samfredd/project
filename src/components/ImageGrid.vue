@@ -35,6 +35,7 @@ export default {
   gap: 20px;
   position: relative;
   margin-top: -20px; 
+  height: fit-content;
 }
 
 .image-item {
