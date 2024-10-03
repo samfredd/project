@@ -34,7 +34,7 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   position: relative;
-  margin-top: -50px; /* Overlapping backdrop by shifting upward */
+  margin-top: -20px; 
 }
 
 .image-item {
@@ -47,7 +47,7 @@ export default {
 }
 
 .image-item:nth-child(odd) {
-  grid-row: span 2; /* Stagger the height of odd images */
+  grid-row: span 2;
 }
 
 .image-item:hover {
@@ -56,7 +56,7 @@ export default {
 
 .image-placeholder {
   width: 100%;
-  height: 100%;
+  height: auto;
   border-radius: 16px;
   background: #e0e0e0;
   overflow: hidden;
