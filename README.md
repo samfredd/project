@@ -111,33 +111,6 @@ Usage
 	Alternatively, click outside the image to close the modal.
 
 
-Project Structure
-
-mini-unsplash-clone/
-│
-├── public/
-│   └── index.html          
-│
-├── src/
-│   ├── assets/           
-│   ├── components/         
-│   │   ├── ImageGrid.vue
-│   │   ├── ImageCard.vue
-│   │   ├── SearchBar.vue
-│   │   └── ImageModal.vue
-│   ├── views/              
-│   │   └── Home.vue
-│   ├── store/              
-│   ├── router/             
-│   ├── App.vue             
-│   ├── main.js             
-│   └── styles/             
-│       └── main.css
-│
-├── .env                    
-├── .gitignore             
-├── package.json          
-├── README.md            
 
 
 Future Enhancements
